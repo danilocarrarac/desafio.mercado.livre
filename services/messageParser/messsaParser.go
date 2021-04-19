@@ -2,9 +2,8 @@ package messageParser
 
 import (
 	"fmt"
+	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/models"
 	"strings"
-
-	"github.com/danilocarrarac/desafio.mercado.livre/models"
 )
 
 func MessageParserAll(satellites []models.SatelliteUnit) string {

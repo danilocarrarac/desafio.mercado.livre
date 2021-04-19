@@ -6,10 +6,11 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/danilocarrarac/desafio.mercado.livre/models"
-	"github.com/danilocarrarac/desafio.mercado.livre/services/asteroids"
-	"github.com/danilocarrarac/desafio.mercado.livre/services/coordinateCalculation"
-	"github.com/danilocarrarac/desafio.mercado.livre/services/messageParser"
+	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/models"
+	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/services/asteroids"
+	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/services/coordinateCalculation"
+	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/services/messageParser"
+
 	"github.com/gin-gonic/gin"
 )
 

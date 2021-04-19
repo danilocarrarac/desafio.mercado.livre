@@ -2,11 +2,10 @@ package coordinateCalculation
 
 import (
 	"fmt"
+	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/models"
 	"math"
 	"strconv"
 	"strings"
-
-	"github.com/danilocarrarac/desafio.mercado.livre/models"
 )
 
 func SpaceShipCoordinatesAllSattelites(satellites []models.SatelliteUnit) models.ShipCoordinates {
