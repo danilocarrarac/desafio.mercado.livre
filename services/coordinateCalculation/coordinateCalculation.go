@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"desafio.mercado.livre/models"
+	"github.com/danilocarrarac/desafio.mercado.livre/models"
 )
 
 func SpaceShipCoordinatesAllSattelites(satellites []models.SatelliteUnit) models.ShipCoordinates {

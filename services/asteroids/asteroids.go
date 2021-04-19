@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	"desafio.mercado.livre/models"
+	"github.com/danilocarrarac/desafio.mercado.livre/models"
 )
 
 func AsteroidInterference(spaceShipTramission []models.SatelliteUnit) []models.SatelliteUnit {
