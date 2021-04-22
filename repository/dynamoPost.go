@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
-func PostDBitem(dbInsert models.DBconsult) {
+func PostDBitem(dbInsert models.DBparser) {
 
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1")},

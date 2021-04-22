@@ -1,7 +1,6 @@
 package messageParser
 
 import (
-	"fmt"
 	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/models"
 	"strings"
 )
@@ -30,7 +29,6 @@ func MessageParserUnit(satellite models.SatelliteUnit) string {
 
 	var i int
 	for _, message := range satellite.Message {
-		fmt.Printf("\n2o - for: valor de message: %#v\n", message)
 		if message != "" && strings.ToLower(satellite.Name) == "kenobi" {
 			messageParser[i] = message
 		} else if message != "" && strings.ToLower(satellite.Name) == "skywalker" {
@@ -41,7 +39,6 @@ func MessageParserUnit(satellite models.SatelliteUnit) string {
 		i++
 
 	}
-	fmt.Printf("\nArray Parseado: %#v", messageParser)
 	return strings.Join(messageParser, " ")
 
 }

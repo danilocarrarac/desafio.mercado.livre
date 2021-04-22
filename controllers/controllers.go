@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"strconv"
 	"strings"
 
+	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/dtos"
 	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/models"
 	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/repository"
 	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/services/asteroids"
@@ -20,63 +20,61 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/topsecret_split/", func(context *gin.Context) {
+	router.POST("/topsecret", func(context *gin.Context) {
 
-		var dbConsult models.DBconsult
-		var satelliteUnit models.SatelliteUnit
-		sateliteName := context.Query("satellite_name")
-		distance := context.Query("distance")
+		requestBody := new(models.Satellites)
+		context.BindJSON(requestBody)
 
-		if strings.Count(sateliteName, "") > 0 {
-			requestBody := context.Request.Body
-			x, _ := ioutil.ReadAll(requestBody)
-			json.Unmarshal([]byte(x), &dbConsult)
-			dbConsult.Name = sateliteName
-			dbConsult.Distance, _ = strconv.ParseFloat(distance, 64)
+		context.JSON(200, gin.H{
+			"status":   "ok",
+			"position": coordinateCalculation.SpaceShipCoordinatesAllSattelites(requestBody.SatellitesUnit),
+			"message":  messageParser.MessageParserAll(asteroids.AsteroidInterference(requestBody.SatellitesUnit)),
+		})
+	})
 
-			fmt.Printf("\nvalor de satelite no get: %#v: \n", dbConsult)
+	router.GET("/topsecret_split/name/:satellite_name/distance/:distance", func(context *gin.Context) {
 
-			dbItem := repository.GetDBitem(dbConsult)
+		if strings.Count(context.Param("satellite_name"), "") > 0 {
+			var dbItem models.DBparser
+			context.BindJSON(dbItem)
+			dbItem.Name = context.Param("satellite_name")
+			dbItem.Distance, _ = strconv.ParseFloat(context.Param("distance"), 64)
 
-			satelliteUnit.Name = dbItem.Name
-			satelliteUnit.Distance = dbItem.Distance
+			dbConsult := repository.GetDBitem(dbItem)
 
-			context.JSON(202, gin.H{
+			context.JSON(200, gin.H{
 
-				"position": coordinateCalculation.SpaceShipCoordinatesSattelitesUnit((satelliteUnit)),
-				"message":  dbItem.Message,
+				"position": coordinateCalculation.SpaceShipCoordinatesSattelitesUnit((dtos.DTOdbParserToSatellite(dbConsult))),
+				"message":  dbConsult.Message,
 			})
 
 		} else {
 			context.JSON(404, gin.H{
-				"status": "source not found",
+				"status": "param should not be blank",
 			})
 		}
 
 	})
 
-	router.POST("/topsecret_split/", func(context *gin.Context) {
-		var satellite models.SatelliteUnit
-		var dbInsert models.DBconsult
+	router.POST("/topsecret_split/name/:satellite_name", func(context *gin.Context) {
+		var satelliteUnit models.SatelliteUnit
+		var dbInsert models.DBparser
 
-		queryParam := context.Query("satellite_name")
+		queryParam := context.Param("satellite_name")
 
 		if strings.Count(queryParam, "") > 0 {
 			requestBody := context.Request.Body
 			x, _ := ioutil.ReadAll(requestBody)
-			json.Unmarshal([]byte(x), &satellite)
-			satellite.Name = queryParam
+			json.Unmarshal([]byte(x), &satelliteUnit)
+			satelliteUnit.Name = queryParam
 
-			context.JSON(202, gin.H{
+			context.JSON(200, gin.H{
 
-				"position": coordinateCalculation.SpaceShipCoordinatesSattelitesUnit(satellite),
-				"message":  messageParser.MessageParserUnit(asteroids.AsteroidInterferenceUnit(satellite)),
+				"position": coordinateCalculation.SpaceShipCoordinatesSattelitesUnit(satelliteUnit),
+				"message":  messageParser.MessageParserUnit(asteroids.AsteroidInterferenceUnit(satelliteUnit)),
 			})
 
-			dbInsert.Name = satellite.Name
-			dbInsert.Message = messageParser.MessageParserUnit(asteroids.AsteroidInterferenceUnit(satellite))
-			dbInsert.Distance = satellite.Distance
-
+			dbInsert = dtos.DTOsatelliteToDBparser(satelliteUnit)
 			repository.PostDBitem(dbInsert)
 
 		} else {
@@ -86,22 +84,6 @@ func main() {
 		}
 	})
 
-	router.POST("/topsecret", func(context *gin.Context) {
-
-		var satellites models.Satellites
-
-		requestBody := context.Request.Body
-		x, _ := ioutil.ReadAll(requestBody)
-		json.Unmarshal([]byte(x), &satellites)
-
-		context.JSON(200, gin.H{
-			"status":   "ok",
-			"position": coordinateCalculation.SpaceShipCoordinatesAllSattelites(satellites.SatellitesUnit),
-			"message":  messageParser.MessageParserAll(asteroids.AsteroidInterference(satellites.SatellitesUnit)),
-		})
-
-	})
-
-	router.Run(":8080") //listen and serve on 0.0.0.0:8080
+	router.Run(":3000")
 
 }

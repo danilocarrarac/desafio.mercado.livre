@@ -2,7 +2,7 @@ package models
 
 //Satellites struct
 type Satellites struct {
-	SatellitesUnit []SatelliteUnit
+	SatellitesUnit []SatelliteUnit `json:"satellites"`
 }
 
 //SatelliteUnit struct
@@ -19,7 +19,7 @@ type ShipCoordinates struct {
 }
 
 //DBconsulting
-type DBconsult struct {
+type DBparser struct {
 	Name     string
 	Distance float64
 	Message  string

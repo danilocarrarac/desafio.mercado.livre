@@ -11,7 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
-func GetDBitem(satellite models.DBconsult) models.DBconsult {
+func GetDBitem(satellite models.DBparser) models.DBparser {
 
 	fmt.Printf("\nvalor de satelite no  DENTRO DO FUNC: %#v: \n", satellite)
 
@@ -38,7 +38,7 @@ func GetDBitem(satellite models.DBconsult) models.DBconsult {
 	// 	log.("Got error calling GetItem: %s", err)
 	// }
 
-	item := models.DBconsult{}
+	item := models.DBparser{}
 
 	err = dynamodbattribute.UnmarshalMap(result.Item, &item)
 	if err != nil {
