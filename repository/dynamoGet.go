@@ -13,8 +13,6 @@ import (
 
 func GetDBitem(satellite models.DBparser) models.DBparser {
 
-	fmt.Printf("\nvalor de satelite no  DENTRO DO FUNC: %#v: \n", satellite)
-
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1")},
 	)
@@ -34,9 +32,9 @@ func GetDBitem(satellite models.DBparser) models.DBparser {
 			},
 		},
 	})
-	// if err != nil {
-	// 	log.("Got error calling GetItem: %s", err)
-	// }
+	if err != nil {
+		fmt.Errorf("Got error calling GetItem: %s", err)
+	}
 
 	item := models.DBparser{}
 
@@ -44,11 +42,6 @@ func GetDBitem(satellite models.DBparser) models.DBparser {
 	if err != nil {
 		panic(fmt.Sprintf("Failed to unmarshal Record, %v", err))
 	}
-
-	fmt.Println("Found item:")
-	fmt.Println("Name:  ", item.Name)
-	fmt.Println("Message: ", item.Message)
-	fmt.Println("Distance:  ", item.Distance)
 
 	return item
 

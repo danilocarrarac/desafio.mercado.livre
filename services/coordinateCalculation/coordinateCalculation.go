@@ -1,7 +1,6 @@
 package coordinateCalculation
 
 import (
-	"fmt"
 	"go/go/src/github.com/danilocarrarac/desafio.mercado.livre/models"
 	"math"
 	"strconv"
@@ -9,8 +8,6 @@ import (
 )
 
 func SpaceShipCoordinatesAllSattelites(satellites []models.SatelliteUnit) models.ShipCoordinates {
-
-	fmt.Printf("\nVALOR DE SATELITES x: %#v\n", satellites)
 
 	var shipCoordinates models.ShipCoordinates
 	satoAngle := 30.00
@@ -42,22 +39,13 @@ func SpaceShipCoordinatesAllSattelites(satellites []models.SatelliteUnit) models
 			kenobi.x = math.Sin(kenobiAngle) * satelliteUnit.Distance
 			kenobi.y = math.Cos(kenobiAngle) * satelliteUnit.Distance
 
-			fmt.Printf("\nKenobi cordenada x: %.2f\n", kenobi.x)
-			fmt.Printf("Kenobi cordenada y: %.2f\n", kenobi.y)
-
 		} else if strings.ToLower(satellites[i].Name) == "skywalker" {
 			skywalker.x = math.Sin(skywalkerAngle) * satelliteUnit.Distance
 			skywalker.y = math.Cos(skywalkerAngle) * satelliteUnit.Distance
 
-			fmt.Printf("\nskywalker cordenada x: %.2f\n", skywalker.x)
-			fmt.Printf("skywalker cordenada y: %.2f\n", skywalker.y)
-
 		} else if strings.ToLower(satellites[i].Name) == "sato" {
 			sato.x = math.Sin(satoAngle) * satelliteUnit.Distance
 			sato.y = math.Cos(satoAngle) * satelliteUnit.Distance
-
-			fmt.Printf("\nsato cordenada x: %.2f\n", sato.x)
-			fmt.Printf("sato cordenada y: %.2f\n", sato.y)
 
 		}
 
@@ -97,15 +85,5 @@ func SpaceShipCoordinatesSattelitesUnit(satellite models.SatelliteUnit) models.S
 
 	}
 
-	fmt.Printf("Nave cordenada y: %#v\n", shipCoordinates)
-
 	return shipCoordinates
 }
-
-// 		} else if strings.ToLower(satellites[i].Name) == "skywalker" {
-// 			skywalker.x = math.Sin(skywalkerAngle) * satelliteUnit.Distance
-// 			skywalker.y = math.Cos(skywalkerAngle) * satelliteUnit.Distance
-
-// 		} else if strings.ToLower(satellites[i].Name) == "sato" {
-// 			sato.x = math.Sin(satoAngle) * satelliteUnit.Distance
-// 			sato.y = math.Cos(satoAngle) * satelliteUnit.Distance
