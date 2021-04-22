@@ -60,13 +60,12 @@ func main() {
 		var satelliteUnit models.SatelliteUnit
 		var dbInsert models.DBparser
 
-		queryParam := context.Param("satellite_name")
-
-		if strings.Count(queryParam, "") > 0 {
+		if strings.Count(context.Param("satellite_name"), "") > 0 {
 			requestBody := context.Request.Body
 			x, _ := ioutil.ReadAll(requestBody)
 			json.Unmarshal([]byte(x), &satelliteUnit)
-			satelliteUnit.Name = queryParam
+
+			satelliteUnit.Name = context.Param("satellite_name")
 
 			context.JSON(200, gin.H{
 
