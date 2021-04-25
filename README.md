@@ -26,7 +26,8 @@ Doc!
 
 Este projeto possui 3 endpoints Rest
 
-1 - POST /topsecret: recebe um body que é encaminahdo para todos os satélites calcularem a posição da nave;
+1 - POST /topsecret:
+recebe um body que é encaminahdo para todos os satélites calcularem a posição da nave;
 Os dados requeridos no body da request é um array com objetos do tipo Satélite que por sua vez possuem os parâmetros:
 
 name: Referente ao nome do satélite;
@@ -34,7 +35,8 @@ distance: Referente a distância da nave até o satélite;
 message: Mensagem secreta transmitida pela nave até os satélites da base aliada.;
 
 
-2 - POST /topsecret_split/name{nome-satelite}: Recebe no path param o nome do satélite e no body da requsição
+2 - POST /topsecret_split/name{nome-satelite}:
+Recebe no path param o nome do satélite e no body da requsição
 as demais características como: Distância e Mensagem. A partir desses dados as funcões de cálculo de rota aplicam
 suas regras de negócio para determinar a posiçãso da nave de acordo com o nome de cada satélite.
 Os parâmetros para utilização deste endpoint são:
@@ -45,7 +47,8 @@ message: Mensagem secreta transmitida pela nave até os satélites da base aliad
 
 
 
-3 GET /topsecret_split/name{nome-satelite}/distance{distance}: Realiza a consulta na base e retorna o cálculo da rota + a mensagem enviada. Em caso de dados não existentes na base o erro retornado é 404;
+3 GET /topsecret_split/name{nome-satelite}/distance{distance}:
+Realiza a consulta na base e retorna o cálculo da rota + a mensagem enviada. Em caso de dados não existentes na base o erro retornado é 404;
 Os parâmetros para a consulta do GET são:
 name: Referente ao nome do satélite;
 distance: Referente a dis6ancia da nave até o satélite;
