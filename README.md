@@ -1,17 +1,5 @@
 # desafio.mercado.livre
 
-URLs:
-
-Post para todos os Satélites:
-http://54.198.86.218:32768/topsecret
-
-Post por Satélite:
-http://54.198.86.218:32768/topsecret_split/name/skywalker
-
-Get Por Satélite + nome
-http://54.198.86.218:32768/topsecret_split/name/{nome-satelite}/distance/{distance}
-
-
 Stack do Projeto
 
 GO 1.16
@@ -26,8 +14,7 @@ Doc!
 
 Este projeto possui 3 endpoints Rest
 
-1 - POST /topsecret:
-recebe um body que é encaminahdo para todos os satélites calcularem a posição da nave;
+1 - POST /topsecret: recebe um body que é encaminahdo para todos os satélites calcularem a posição da nave;
 Os dados requeridos no body da request é um array com objetos do tipo Satélite que por sua vez possuem os parâmetros:
 
 name: Referente ao nome do satélite;
@@ -35,8 +22,7 @@ distance: Referente a distância da nave até o satélite;
 message: Mensagem secreta transmitida pela nave até os satélites da base aliada.;
 
 
-2 - POST /topsecret_split/name{nome-satelite}:
-Recebe no path param o nome do satélite e no body da requsição
+2 - POST /topsecret_split/name{nome-satelite}: Recebe no path param o nome do satélite e no body da requsição
 as demais características como: Distância e Mensagem. A partir desses dados as funcões de cálculo de rota aplicam
 suas regras de negócio para determinar a posiçãso da nave de acordo com o nome de cada satélite.
 Os parâmetros para utilização deste endpoint são:
@@ -47,12 +33,36 @@ message: Mensagem secreta transmitida pela nave até os satélites da base aliad
 
 
 
-3 GET /topsecret_split/name{nome-satelite}/distance{distance}:
-Realiza a consulta na base e retorna o cálculo da rota + a mensagem enviada. Em caso de dados não existentes na base o erro retornado é 404;
+3 GET /topsecret_split/name{nome-satelite}/distance{distance}: Realiza a consulta na base e retorna o cálculo da rota + a mensagem enviada. Em caso de dados não existentes na base o erro retornado é 404;
 Os parâmetros para a consulta do GET são:
 name: Referente ao nome do satélite;
 distance: Referente a dis6ancia da nave até o satélite;
 
+
+
+Regras de Negócio
+
+Função Asteroids:
+A função Asteroids aplica uma dinâmica com números randômicos para que em um dado momento a mensagem recebida seja embaralhada causando mais "naturalidade" ao processo de interferência de sinais.
+
+Função CoordinateCalculation:
+Recebe como parâmetro a distância da nave com os satélites e a partir disso cácula a posição da nave.
+Para determinar a posição foi utilizada a regra do Triângulo retângulo em que a distância fornecida se torna a hipotenusa e a partir de ângulos pré-estabelcidos cálcula-se os catetos opostos (posição x) e os catetos adjacentes (posição y).
+
+No caso do cálculo dos 3 satélites é realizada a média simples dos valores encontrados e então determinadas as posições x e y.
+
+No caso de requests para o path /topsecret_split. A posição é determinada unicamente pelo cálculo dos catetos da com base na distância fornecida.
+
+
+Função MessaParser:
+Tenta reordenar as mensagens com interferência recebidas através do cinturão de asteroides.
+A organização do algoritmo se da em formato colunas eliminando os espaços em branco da mensagem com uma que represente aquela lacuna.
+
+
+**** OBS IMPORTANTE ****
+Algumas vezes, por conta do ramdom aplicado aos asteroides, uma mensagem poderá vir parcialmente vazia ou totalmente vazia.
+
+Isso nào é um bug e sim um comportamento causado pelo método randômico da função Asteroides
 
 
 
@@ -74,6 +84,10 @@ Roadmap de melhorias na API
 
 - Adicão de regras de validação do body da requisição para não aceitar tipos diferentes do
 
+- Handlers de erro
+
+- Logging da app
+
 
 
 Roadmap infra
@@ -84,5 +98,3 @@ Roadmap infra
 
 
 - Integração do Code Pipeline com o github para automação do processo de deploy;
-
-
